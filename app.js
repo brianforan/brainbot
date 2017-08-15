@@ -10,29 +10,12 @@
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const config = require('./config.json');
-const token = config.botToken;
+client.config = require('./config.json');
+client.sf = require("snekfetch");
 const fs = require("fs");
 client.commands = new Discord.Collection();
 
 if(process.version.slice(1).split(".")[0] < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system. If you ask me 'why doesn't your selfbot work' and I see this error I will slap you silly.");
-
-//taken from
-//https://github.com/eslachance/evie.selfbot/blob/master/app.js
-fs.readdir('./commands/', (err, files) => {
-  if (err) console.error(err);
-  console.log(`Loading a total of ${files.length} commands.`);
-  files.forEach(f => {
-    if(f.split(".").slice(-1)[0] !== "js") return;
-    let props = require(`./commands/${f}`);
-    client.commands.set(props.help.name, props);
-    if(props.init) props.init(client);
-    props.conf.aliases.forEach(alias => {
-      client.aliases.set(alias, props.help.name);
-    });
-  });
-});
-
 
 
 //Do NOT delete
@@ -45,15 +28,19 @@ client.on('guildMemberAdd', member => {
   member.guild.defaultChannel.send(`Welcome to the server, ${member}!`);
 });
 
-client.on('message', message => {
-  if(message.content === "Hello") {
-    client.message("World");
-  }
+client.on('message', msg => {
+  if(msg.content.indexOf(client.config.prefix) !== 0) return; //require !
 
-  if(message.content === "!ping") {
-    message.reply("Pong!");
+  //Split args
+  const args = msg.content.slice(client.config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+
+  try {
+    let commandFile = require(`./commands/${command}.js`);
+    commandFile.run(client, msg, args);
+  } catch (err) {
+    console.error(err);
   }
 });
-
 // Log our bot in
-client.login(token);
+client.login(client.config.botToken);
