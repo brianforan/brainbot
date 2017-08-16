@@ -23,10 +23,10 @@ client.on('ready', () => {
   console.log('I am ready!');
 });
 
-// Create an event listener for new guild members
-client.on('guildMemberAdd', member => {
-  member.guild.defaultChannel.send(`Welcome to the server, ${member}!`);
-});
+// // Create an event listener for new guild members
+// client.on('guildMemberAdd', member => {
+//   member.guild.defaultChannel.send(`Welcome to the server, ${member}!`);
+// });
 
 client.on('message', msg => {
   if(msg.content.indexOf(client.config.prefix) !== 0) return; //require !
@@ -38,7 +38,9 @@ client.on('message', msg => {
   try {
     let commandFile = require(`./commands/${command}.js`);
     commandFile.run(client, msg, args);
+    console.log(`Command ${command} has been run`);
   } catch (err) {
+    msg.channel.send("An error was caught! Bad command? .ping - very useful");
     console.error(err);
   }
 });
