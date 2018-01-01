@@ -1,0 +1,22 @@
+{
+  "name": "brainbot",
+  "version": "0.1.0",
+  "description": "discord bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brianforan/brainbot.git"
+  },
+  "author": "brianmink",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brianforan/brainbot/issues"
+  },
+  "homepage": "https://github.com/brianforan/brainbot#readme",
+  "dependencies": {
+    "discord.js": "^11.2.1"
+  }
+}
