@@ -8,6 +8,9 @@ yarn-error.log*
 # Config
 config.json
 
+# Ignored Commands
+commands/kickderk.js
+
 # Runtime data
 pids
 *.pid
