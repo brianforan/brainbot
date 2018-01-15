@@ -1,33 +1,47 @@
-// discord stuff
+// bot stuff
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const fs = require("fs");
 
-// destructure config
-const { botToken, game, prefix } = require('./config.json');
-
-// other stuff
+// destructures for app
+const { botToken, game, prefix, db} = require('./config.json');
 const { log } = console;
 
-//Do NOT delete
+const SELF = true;
+
 client.on('ready', () => {
     log('Ready');
     client.user.setGame(game);
+
 });
 
-// // Create an event listener for new guild members
-// client.on('guildMemberAdd', member => {
-//   member.guild.defaultChannel.send(`Welcome to the server, ${member}!`);
-// });
-
 client.on('message', msg => {
+    if(msg.content.toLowerCase() === 'good bot') {
+        msg.channel.send(':drooling_face:');
+        return;
+    }
+
     if(msg.content.indexOf(prefix) !== 0) return; //require !
 
     //Split args
     const args = msg.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
+    const dbCommands = ['tag'];
+
     try {
+        if(dbCommands.includes(command)) {
+            client.knex = require('knex')({
+                client: 'mysql2',
+                connection: {
+                    host: db.server,
+                    user: db.user,
+                    password: db.pass,
+                    database: db.name,
+                    port: db.port
+                }
+            });
+        }
         let commandFile = require(`./commands/${command}.js`);
         commandFile.run(client, msg, args);
         console.log(`Command ${command} has been run`);

@@ -1,34 +1,37 @@
 exports.run = async (client, msg, args) => {
     const { log } = console;
     const mention = msg.mentions.users.first();
+    const sender = await msg.guild.fetchMember(msg.author.id);
 
-    if(args.length !== 2) {
-        msg.channel.send('Invalid request');
+    if(!sender.roles.has('396086937951272961') && !msg.channel.permissionsFor(msg.author).has("MANAGE_ROLES")) {
+        msg.delete();
+        msg.channel.send('Insufficient privileges.');
         return;
     }
 
     if(typeof mention === "undefined") {
-        msg.channel.send("Usage: `perms @username`");
+        msg.delete();
+        msg.channel.send("Usage: `timeout @username`");
         return;
     }
-
-    const assigns = [
-        'yes', 'assign', 'add'
-    ];
-
-    const removes = [
-        'no', 'unassign', 'remove'
-    ];
+    //
+    // const assigns = [
+    //     'yes', 'assign', 'add'
+    // ];
+    //
+    // const removes = [
+    //     'no', 'unassign', 'remove'
+    // ];
 
     const assignee = await msg.guild.fetchMember(mention.id);
 
-    if(assigns.includes(args[1])) {
+    if(!assignee.roles.has('396394151266091011')) {
         assignee.addRole('396394151266091011');
-        msg.channel.send(`\`${args[0]}\` has been moved to timeout.`);
+        msg.channel.send(`\`${assignee.user.username}\` has been moved to timeout.`);
         return;
-    } else if(removes.includes(args[1])) {
+    } else if(assignee.roles.has('396394151266091011')) {
         assignee.removeRole('396394151266091011');
-        msg.channel.send(`\`${args[0]}\` has been removed from timeout.`);
+        msg.channel.send(`\`${assignee.user.username}\` has been removed from timeout.`);
         return;
     }
 }
