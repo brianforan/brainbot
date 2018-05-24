@@ -16,11 +16,6 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-    if(msg.content.toLowerCase() === 'good bot') {
-        msg.channel.send(':drooling_face:');
-        return;
-    }
-
     if(msg.content.indexOf(prefix) !== 0) return; //require !
 
     //Split args
