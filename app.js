@@ -20,12 +20,7 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-    if(msg.content.toLowerCase() === 'hello') {
-        msg.channel.send('hello :D');
-        return;
-    }
-
-    if(msg.content.indexOf(prefix) !== 0) return; //require prefix
+    if(msg.content.indexOf(prefix) !== 0) return; //require !
 
     //Split args
     const args = msg.content.slice(prefix.length).trim().split(/ +/g);
