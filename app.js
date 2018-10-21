@@ -16,7 +16,8 @@ const { botToken, game, prefix, db} = require('./config.json');
 const { log } = console;
 
 client.on('ready', () => {
-    client.user.setGame(game);
+    client.user.setActivity(game);
+    log('Logged in as ' + client.user.username)
 });
 
 client.on('message', msg => {

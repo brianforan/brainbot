@@ -1,4 +1,5 @@
 exports.run = async (client, msg, args) => {
+    return;
     const { log } = console;
 
     if(args.length !== 1) {

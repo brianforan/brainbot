@@ -3,7 +3,8 @@ exports.run = async (client, msg, args) => {
     const mention = msg.mentions.users.first();
 
     if (!msg.channel.permissionsFor(msg.author).has("MANAGE_GUILD")) {
-        msg.channel.send(`${msg.author.username} you have failed this city!`);
+        msg.channel.send(`Insufficient privileges`);
+        log(`${msg.author.username} attempted to view permissions of ${mention}`)
         return;
     }
     const perms = [
@@ -23,11 +24,6 @@ exports.run = async (client, msg, args) => {
           "MANAGE_WEBHOOKS",
           "MANAGE_EMOJIS",
       ];
-
-    // if(args.length !== 2) {
-    //     msg.channel.send('Invalid request');
-    //     return;
-    // }
 
     if(typeof mention === "undefined") {
         msg.channel.send("Usage: `perms @username`");

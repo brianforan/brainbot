@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/brianforan/brainbot#readme",
   "dependencies": {
-    "discord.js": "^11.2.1",
-    "knex": "^0.14.2",
+    "discord.js": "^11.4.2",
+    "knex": "^0.14.6",
     "mariasql": "^0.2.6",
-    "mysql2": "^1.5.1",
-    "npm": "^6.0.1"
+    "mysql2": "^1.6.1",
+    "npm": "^6.4.1"
   }
 }
